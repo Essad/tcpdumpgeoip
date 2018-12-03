@@ -1,0 +1,82 @@
+# ElasticSearch ldf map template
+
+
+PUT /ldfmap
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    }
+  },
+  "mappings": {
+    "logs": {
+      "properties": {
+        "dst_ip": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "dst_port": {
+          "type": "keyword"
+        },
+        "geoip": {
+          "properties": {
+            "location": {
+              "type": "geo_point"
+            }
+          }
+        },
+        "occurred_at": {
+          "type": "date",
+          "format": "epoch_second"
+        },
+        "proto": {
+          "type": "keyword"
+        },
+        "dst_net": {
+          "type": "keyword"
+        },
+        "src_ip": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "src_port": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
+
+
+
+
+#Ingestion Pipeline
+
+PUT _ingest/pipeline/geoip-info
+{
+  "description": "Add geoip info",
+  "processors": [
+    {
+      "geoip": {
+        "field": "dst_ip",
+        "properties": [
+          "location"
+        ],
+        "ignore_failure": true
+      }
+    }
+  ]
+}
+
+
