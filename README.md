@@ -1,6 +1,8 @@
 # tcpdumpgeoip
 Dump TCP traffic to Elastic Search
 
+This small python script is used to dump tcpdump traffic to Elastic search in use with the Geoip Ingest pipeline. 
+
 It dumps:
 * Source IP
 * Source Port
@@ -10,6 +12,6 @@ It dumps:
 * Epoch of the event
 
 
-This small python script is used to dump tcpdump traffic to Elastic search in use with the Geoip Ingest pipeline. 
+
 
 
